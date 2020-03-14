@@ -43,7 +43,7 @@ class Crawler:
 
   def Designinfo(self):
     key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D'
-    necessary = '?serviceKey=' + key + '&freeSearch=' + self.keyword
+    necessary = '?serviceKey=' + key + '&free=' + self.keyword
     option = '&open=true&rejection=true&destroy=true' \
              '&cancle=true&notice=true&registration=true&invalid=true' \
              '&abandonment=true&simi=true' \
