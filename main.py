@@ -20,7 +20,7 @@ class Crawler:
   def Markinfo(self):
     key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D'
     necessary = '?serviceKey=' + key + '&freeSearch=' + self.keyword
-    option = '&application=true&registration=true&refused=true' \
+    option = '&numOfRows=100&application=true&registration=true&refused=true' \
              '&expiration=true&refused=true&expiration=true&withdrawal=true' \
              '&publication=true&cancel=true&abandonment=true&trademark=true' \
              '&serviceMark=true&trademarkServiceMark=true&businessEmblem=true' \
@@ -31,20 +31,45 @@ class Crawler:
 
     req = requests.get(url + necessary + option).content
     soup = bs(req, 'lxml-xml')
-
+    '''
     data = soup.find_all('item')
 
     for item in data:
       appnum = item.applicationNumber.text
       link = item.bigDrawing.text
+      print(link)
+      if link == '':
+        continue
 
       save_path = self.dirPath + '/' + str(appnum) + '.jpg'
-      urllib.request.urlretrieve(link,save_path)
+      urllib.request.urlretrieve(link, save_path)
+    '''
+    data_count = soup.find_all('count')
+
+    for count in data_count:
+      total_data = count.totalCount.text
+      total_page = int(total_data)/100 + 1
+
+    for page_num in range(1,int(total_page)):
+      new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
+      new_soup = bs(new_req.content, 'lxml-xml')
+
+      data = new_soup.find_all('item')
+
+      for item in data:
+        appnum = item.applicationNumber.text
+        link = item.bigDrawing.text
+        if link == '':
+          continue
+
+        save_path = self.dirPath + '/' + appnum + '.jpg'
+        urllib.request.urlretrieve(link, save_path)
+
 
   def Designinfo(self):
     key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D'
     necessary = '?serviceKey=' + key + '&free=' + self.keyword
-    option = '&open=true&rejection=true&destroy=true' \
+    option = '&numOfRows=500&open=true&rejection=true&destroy=true' \
              '&cancle=true&notice=true&registration=true&invalid=true' \
              '&abandonment=true&simi=true' \
              '&part=true&etc=true&destroy=소멸'
