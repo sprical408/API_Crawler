@@ -15,4 +15,4 @@ Choose Type: 1. Mark 2. Design... :
 ```
 keyword... :
 ```
-찾고자 하는 관련 단어 
+찾고자 하는 관련 단어 입력
