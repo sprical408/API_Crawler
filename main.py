@@ -31,19 +31,7 @@ class Crawler:
 
     req = requests.get(url + necessary + option).content
     soup = bs(req, 'lxml-xml')
-    '''
-    data = soup.find_all('item')
 
-    for item in data:
-      appnum = item.applicationNumber.text
-      link = item.bigDrawing.text
-      print(link)
-      if link == '':
-        continue
-
-      save_path = self.dirPath + '/' + str(appnum) + '.jpg'
-      urllib.request.urlretrieve(link, save_path)
-    '''
     data_count = soup.find_all('count')
 
     for count in data_count:
@@ -79,14 +67,27 @@ class Crawler:
     req = requests.get(url + necessary + option).content
     soup = bs(req, 'lxml-xml')
 
-    data = soup.find_all('item')
+    data_count = soup.find_all('count')
 
-    for item in data:
-      appnum = item.applicationNumber.text
-      link = item.imagePathLarge.text
+    for count in data_count:
+      total_data = count.totalCount.text
+      total_page = int(total_data) / 100 + 1
 
-      save_path = self.dirPath + '/' + str(appnum) + '.jpg'
-      urllib.request.urlretrieve(link,save_path)
+    for page_num in range(1, int(total_page)):
+      new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
+      new_soup = bs(new_req.content, 'lxml-xml')
+
+      data = new_soup.find_all('item')
+
+      for item in data:
+        appnum = item.applicationNumber.text
+        link = item.imagePathLarge.text
+        if link == '':
+          continue
+
+        save_path = self.dirPath + '/' + appnum + '.jpg'
+        urllib.request.urlretrieve(link, save_path)
+
 
   def run(self):
     """
