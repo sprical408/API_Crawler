@@ -90,10 +90,7 @@ class Crawler:
 
 
   def run(self):
-    """
-        main routines
-        :return:
-        """
+
     self.create_new_directory()
     if self.option == 1:
       self.Markinfo()
@@ -105,7 +102,7 @@ class Crawler:
       print("wrong type")
 
 if __name__ == '__main__':
-  newCrawler = Crawler()  # create new crawler
+  newCrawler = Crawler()
   newCrawler.run()
 
 
