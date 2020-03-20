@@ -38,7 +38,7 @@ class Crawler:
       total_data = count.totalCount.text
       total_page = int(total_data)/100 + 1
 
-    for page_num in range(1,int(total_page)):
+    for page_num in range(8,int(total_page)):
       new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
       new_soup = bs(new_req.content, 'lxml-xml')
 
@@ -47,7 +47,9 @@ class Crawler:
       for item in data:
         appnum = item.applicationNumber.text
         link = item.bigDrawing.text
-        if link == '':
+        try:
+          link = item.bigDrawing.text
+        except AttributeError:
           continue
 
         save_path = self.dirPath + '/' + appnum + '.jpg'
@@ -56,13 +58,10 @@ class Crawler:
 
   def Designinfo(self):
     key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D'
-    necessary = '?serviceKey=' + key + '&free=' + self.keyword
-    option = '&numOfRows=500&open=true&rejection=true&destroy=true' \
-             '&cancle=true&notice=true&registration=true&invalid=true' \
-             '&abandonment=true&simi=true' \
-             '&part=true&etc=true&destroy=소멸'
+    necessary = '?serviceKey=' + key + '&articleName=' + self.keyword
+    option = '&numOfRows=100'
 
-    url = 'http://kipo-api.kipi.or.kr/openapi/service/designInfoSearchService/getAdvancedSearch'
+    url = 'http://kipo-api.kipi.or.kr/openapi/service/designInfoSearchService/getWordSearch'
 
     req = requests.get(url + necessary + option).content
     soup = bs(req, 'lxml-xml')
@@ -73,7 +72,7 @@ class Crawler:
       total_data = count.totalCount.text
       total_page = int(total_data) / 100 + 1
 
-    for page_num in range(1, int(total_page)):
+    for page_num in range(9, int(total_page)):
       new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
       new_soup = bs(new_req.content, 'lxml-xml')
 
@@ -81,8 +80,9 @@ class Crawler:
 
       for item in data:
         appnum = item.applicationNumber.text
-        link = item.imagePathLarge.text
-        if link == '':
+        try:
+          link = item.imagePathLarge.text
+        except AttributeError :
           continue
 
         save_path = self.dirPath + '/' + appnum + '.jpg'
