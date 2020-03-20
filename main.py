@@ -38,7 +38,7 @@ class Crawler:
       total_data = count.totalCount.text
       total_page = int(total_data)/100 + 1
 
-    for page_num in range(1,int(total_page)): # You can choose start page
+    for page_num in range(9,int(total_page)): # You can choose start page
       new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
       new_soup = bs(new_req.content, 'lxml-xml')
 
@@ -49,7 +49,7 @@ class Crawler:
         link = item.bigDrawing.text
         try:
           link = item.bigDrawing.text
-        except AttributeError:
+        except AttributeError or ValueError:
           continue
 
         save_path = self.dirPath + '/' + appnum + '.jpg'
@@ -82,7 +82,7 @@ class Crawler:
         appnum = item.applicationNumber.text
         try:
           link = item.imagePathLarge.text
-        except AttributeError :
+        except AttributeError or ValueError:
           continue
 
         save_path = self.dirPath + '/' + appnum + '.jpg'
