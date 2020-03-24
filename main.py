@@ -47,9 +47,7 @@ class Crawler:
       for item in data:
         appnum = item.applicationNumber.text
         link = item.bigDrawing.text
-        try:
-          link = item.bigDrawing.text
-        except AttributeError or ValueError:
+        if link == '':
           continue
 
         save_path = self.dirPath + '/' + appnum + '.jpg'
@@ -57,7 +55,8 @@ class Crawler:
 
 
   def Designinfo(self):
-    key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D'
+    key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D' # Your own service key...
+
     necessary = '?serviceKey=' + key + '&articleName=' + self.keyword
     option = '&numOfRows=100'
 
