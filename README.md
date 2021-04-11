@@ -1,4 +1,10 @@
 # API_Crawler
+특허청_상표 정보 검색 서비스(https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15043964)  
+특허청_디자인 정보 검색 서비스(https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15043970)  
+
+Open API Clawler  
+
+위 서비스를 사용하기 위해서 활용 신청 후 개인의 인증키를 사용하시길 바랍니다.
 
 ## Package
 ```

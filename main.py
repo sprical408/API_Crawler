@@ -18,7 +18,7 @@ class Crawler:
       os.mkdir(self.dirPath)
 
   def Markinfo(self):
-    key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D' # Your own service key...
+    key = '' # Your own service key...
     necessary = '?serviceKey=' + key + '&freeSearch=' + self.keyword
     option = '&numOfRows=100&application=true&registration=true&refused=true' \
              '&expiration=true&refused=true&expiration=true&withdrawal=true' \
@@ -38,7 +38,7 @@ class Crawler:
       total_data = count.totalCount.text
       total_page = int(total_data)/100 + 1
 
-    for page_num in range(9,int(total_page)): # You can choose start page
+    for page_num in range(1,int(total_page)): # You can choose start page
       new_req = requests.get((url + necessary + '&pageNo=' + str(page_num) + option))
       new_soup = bs(new_req.content, 'lxml-xml')
 
@@ -55,7 +55,7 @@ class Crawler:
 
 
   def Designinfo(self):
-    key = 'l8gBL3d0H0uEerbEKxYRva%2FQUSZQ3YXR9A9qGkFO7btByiwP09y2PfQc2Utg2cM%2FhChr3n44WtFPEJizwFrlwA%3D%3D' # Your own service key...
+    key = '' # Your own service key...
 
     necessary = '?serviceKey=' + key + '&articleName=' + self.keyword
     option = '&numOfRows=100'
